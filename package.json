@@ -36,10 +36,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf dist",
-    "prebuild": "npm run clean",
-    "prepare": "npm run build",
+    "build": "rm -rf dist && tsc",
     "format": "prettier --write ."
   },
   "dependencies": {
