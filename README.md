@@ -274,4 +274,189 @@ describe('my awesome feature', () => {
 
 ## API Reference
 
-_detailled API reference coming soon ..._
+### Functions
+
+#### fn
+
+```ts
+function fn<Args, R>(config: FnConfig<Args, R>): Fn<Args, R>
+```
+
+Creates a type-safe function that uses an LLM to transform inputs into outputs.
+
+**Parameters:**
+- `config`: Configuration object with the following properties:
+  - `llm`: LLM provider instance (see LLM Providers below)
+  - `description`: String describing what the function does (used as system prompt)
+  - `input`: Zod schema for the input type
+  - `output`: Zod schema for the output type
+  - `examples?`: Optional array of input/output examples to guide the LLM
+
+**Returns:**
+A function with the following properties:
+- `(args: Args) => Promise<R>`: The main function that processes inputs
+- `config`: The configuration object used to create the function
+- `mock(implementation: (args: Args) => Promise<R>)`: Method to set a mock implementation
+- `unmock()`: Method to remove the mock implementation
+
+**Example:**
+```ts
+import { z } from 'zod'
+import { fn, llm } from 'aifn'
+import { OpenAI } from 'openai'
+
+const summarize = fn({
+  llm: llm.openai(new OpenAI({ apiKey: 'YOUR_API_KEY' }), 'gpt-3.5-turbo'),
+  description: 'Summarize the given text in a concise way',
+  input: z.object({
+    text: z.string().describe('The text to summarize'),
+    maxWords: z.number().describe('Maximum number of words in the summary')
+  }),
+  output: z.object({
+    summary: z.string().describe('The summarized text'),
+    wordCount: z.number().describe('Number of words in the summary')
+  }),
+  examples: [{
+    input: { text: 'TypeScript is a programming language...', maxWords: 10 },
+    output: { summary: 'TypeScript: JavaScript with static typing.', wordCount: 5 }
+  }]
+})
+```
+
+### LLM Providers
+
+#### llm.openai
+```ts
+function openai(client: OpenAI, model: string): LLM
+```
+
+Creates an OpenAI LLM provider.
+
+**Parameters:**
+- `client`: OpenAI client instance
+- `model`: Model name (e.g., 'gpt-4', 'gpt-4o-mini')
+
+**Example:**
+```ts
+import { OpenAI } from 'openai'
+import { llm } from 'aifn'
+
+const provider = llm.openai(
+  new OpenAI({ apiKey: 'YOUR_API_KEY' }),
+  'gpt-4o-mini'
+)
+```
+
+#### llm.anthropic
+```ts
+function anthropic(client: Anthropic, model: string): LLM
+```
+
+Creates an Anthropic LLM provider.
+
+**Parameters:**
+- `client`: Anthropic client instance
+- `model`: Model name (e.g., 'claude-3-5-haiku-20241022')
+
+**Example:**
+```ts
+import Anthropic from '@anthropic-ai/sdk'
+import { llm } from 'aifn'
+
+const provider = llm.anthropic(
+  new Anthropic({ apiKey: 'YOUR_API_KEY' }),
+  'claude-3-5-haiku-20241022'
+)
+```
+
+#### llm.gemini
+```ts
+function gemini(client: GoogleGenerativeAI, model: string): LLM
+```
+
+Creates a Google Gemini LLM provider.
+
+**Parameters:**
+- `client`: Google GenerativeAI client instance
+- `model`: Model name (e.g., 'gemini-1.5-flash')
+
+**Example:**
+```ts
+import { GoogleGenerativeAI } from '@google/generative-ai'
+import { llm } from 'aifn'
+
+const provider = llm.gemini(
+  new GoogleGenerativeAI('YOUR_API_KEY'),
+  'gemini-1.5-flash'
+)
+```
+
+#### llm.ollama
+```ts
+function ollama(client: Ollama, model: string): LLM
+```
+
+Creates an Ollama LLM provider for local models.
+
+**Parameters:**
+- `client`: Ollama client instance
+- `model`: Model name (e.g., 'llama3.1', 'mistral')
+
+**Example:**
+```ts
+import { Ollama } from 'ollama'
+import { llm } from 'aifn'
+
+const provider = llm.ollama(new Ollama(), 'llama3.1')
+```
+
+#### llm.custom
+```ts
+function custom(generate: (req: LLMRequest) => Promise<LLMResponse>): LLM
+```
+
+Creates a custom LLM provider with your own implementation.
+
+**Parameters:**
+- `generate`: Function that implements the LLM request/response cycle
+
+**Example:**
+```ts
+import { llm, LLMRequest, LLMResponse } from 'aifn'
+
+const provider = llm.custom(async (req: LLMRequest): Promise<LLMResponse> => {
+  // Your custom implementation here
+  return {
+    type: 'json',
+    data: { /* your response data */ },
+    response: { /* raw response data */ }
+  }
+})
+```
+
+### Types
+
+#### LLMRequest
+```ts
+type LLMRequest = {
+  system: string              // System prompt
+  messages: Message[]         // Conversation history
+  output_schema?: ZodSchema   // Expected output schema
+}
+```
+
+#### LLMResponse
+```ts
+type LLMResponse =
+  | { type: 'text'; content: string; response: any }
+  | { type: 'json'; data: unknown; response: any }
+  | { type: 'error'; error: unknown }
+```
+
+#### Message
+```ts
+type Message = {
+  role: 'user' | 'assistant'
+  content: string
+}
+```
