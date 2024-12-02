@@ -1,8 +1,11 @@
 {
   "extends": "@total-typescript/tsconfig/tsc/no-dom/library",
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "skipDefaultLibCheck": true
+    "rootDir": ".",
+    "noEmit": true,
+    "skipDefaultLibCheck": true,
+    "noImplicitReturns": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": false
   }
 }

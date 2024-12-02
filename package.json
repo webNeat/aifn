@@ -1,6 +1,6 @@
 {
   "name": "aifn",
-  "version": "1.0.0",
+  "version": "2.0.0-alpha.0",
   "description": "Create functions using AI LLMs.",
   "type": "module",
   "main": "dist/index.js",
@@ -36,10 +36,12 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "format": "prettier --write ."
   },
   "dependencies": {
+    "lodash": "^4.17.21",
+    "wari": "^1.4.3",
     "yaml": "^2.6.1",
     "zod": "^3.23.8",
     "zod-to-json-schema": "^3.23.5"
@@ -52,8 +54,10 @@
   },
   "devDependencies": {
     "@total-typescript/tsconfig": "^1.0.4",
+    "@types/lodash": "^4.17.13",
     "@types/node": "^22.9.3",
     "prettier": "^3.3.3",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
 }
