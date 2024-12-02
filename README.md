@@ -7,15 +7,35 @@ Create type-safe functions using AI Language Models with ease.
 
 ## Contents
 
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Usage](#quick-usage)
+  - [OpenAI](#usage-with-openai)
+  - [Anthropic](#usage-with-anthropic)
+  - [Gemini](#usage-with-gemini)
+  - [Ollama](#usage-with-ollama)
+- [Guides](#guides)
+  - [Adding Examples for Better Results](#adding-examples-for-better-results)
+  - [Using Custom LLM Provider](#using-custom-llm-provider)
+  - [Get the Function Configuration](#get-the-function-configuration)
+  - [Mock the Function During Tests](#mock-the-function-during-tests)
+- [API Reference](#api-reference)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Features
 
 - 🤖 Support for multiple AI providers:
   - OpenAI
   - Anthropic
-  - Gemini
+  - Google Gemini
   - Ollama (Local models)
+- 🛠️ Ability to implement custom providers
 - 📝 Type-safe function creation using [Zod](https://github.com/colinhacks/zod)
 - 🔒 Runtime validation of LLM output
+- 🧪 Built-in mocking support for testing
+- 🔄 Easy provider switching
+- 🎯 Example-based prompt enhancement
 
 ## Installation
 
@@ -30,7 +50,7 @@ yarn add aifn
 pnpm add aifn
 ```
 
-You'll also need to install the provider SDK you want to use:
+You'll also need to install the provider SDKs you want to use:
 
 ```bash
 # For OpenAI
@@ -255,4 +275,3 @@ describe('my awesome feature', () => {
 ## API Reference
 
 _detailled API reference coming soon ..._
-
