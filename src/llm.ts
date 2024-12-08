@@ -13,18 +13,11 @@ export function ollama(client: Ollama, model: string, parameters: Partial<Ollama
     const options = {
       model,
       messages: [{ role: 'system', content: req.system }, ...req.messages],
-      tools: req.output_schema && [
-        {
-          type: 'function',
-          function: {
-            name: 'format_output',
-            description: 'Formats the output. You should always call this function to format the response.',
-            parameters: to_json_schema(req.output_schema),
-          },
-        },
-      ],
-      format: req.output_schema && 'json',
-      options: parameters,
+      format: req.output_schema && to_json_schema(req.output_schema),
+      options: {
+        temperature: 0,
+        ...parameters,
+      },
     }
     const res = await E.catch(
       () => client.chat(options),

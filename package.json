@@ -1,6 +1,6 @@
 {
   "name": "aifn",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.1",
   "description": "Create functions using AI LLMs.",
   "type": "module",
   "main": "dist/index.js",
@@ -49,14 +49,15 @@
   "peerDependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
     "@google/generative-ai": "^0.21.0",
-    "ollama": "^0.5.10",
-    "openai": "^4.73.0"
+    "ollama": "^0.5.11",
+    "openai": "^4.76.0",
+    "together-ai": "^0.10.0"
   },
   "devDependencies": {
     "@total-typescript/tsconfig": "^1.0.4",
     "@types/lodash": "^4.17.13",
-    "@types/node": "^22.9.3",
-    "prettier": "^3.3.3",
+    "@types/node": "^22.10.1",
+    "prettier": "^3.4.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }

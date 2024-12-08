@@ -20,8 +20,7 @@ Create type-safe functions using AI Language Models with ease.
   - [Get the Function Configuration](#get-the-function-configuration)
   - [Mock the Function During Tests](#mock-the-function-during-tests)
 - [API Reference](#api-reference)
-- [Contributing](#contributing)
-- [License](#license)
+- [Changelog](#changelog)
 
 ## Features
 
@@ -460,3 +459,21 @@ type Message = {
   content: string
 }
 ```
+
+## Changelog
+
+**2.0.0-alpha.1 (Dec 8th 2024)**
+
+- Implement structured output for Ollama
+
+**2.0.0-alpha.0 (Dec 2nd 2024)**
+
+- Refactor of codebase
+- Add ability to implement custom LLM providers
+- Add ability to mock the function during tests
+- Add ability to get the function configuration
+- Implement structured output for OpenAI
+
+**1.0.0 (Nov 25th 2024)**
+
+- First version
